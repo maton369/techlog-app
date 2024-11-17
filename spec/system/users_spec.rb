@@ -3,7 +3,6 @@ require 'rails_helper'
 describe 'User', type: :system do
   before { driven_by :selenium_chrome_headless }
 
-  # ユーザー情報入力用の変数
   let(:email) { 'test@example.com' }
   let(:nickname) { 'テスト太郎' }
   let(:password) { 'password' }
@@ -12,7 +11,6 @@ describe 'User', type: :system do
   describe 'ユーザー登録機能の検証' do
     before { visit '/users/sign_up' }
 
-    # ユーザー登録を行う一連の操作を subject にまとめる
     subject do
       fill_in 'user_nickname', with: nickname
       fill_in 'user_email', with: email
@@ -23,9 +21,9 @@ describe 'User', type: :system do
 
     context '正常系' do
       it 'ユーザーを作成できる' do
-        expect { subject }.to change(User, :count).by(1) # Userが1つ増える
+        expect { subject }.to change(User, :count).by(1)
         expect(page).to have_content('ユーザー登録に成功しました。')
-        expect(current_path).to eq('/') # ユーザー登録後はトップページにリダイレクト
+        expect(current_path).to eq('/')
       end
     end
 
@@ -50,8 +48,8 @@ describe 'User', type: :system do
       context 'nicknameが空の場合' do
         let(:nickname) { '' }
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
-          expect { subject }.not_to change(User, :count) # Userが増えない
-          expect(page).to have_content('ニックネーム が入力されていません。') # エラーメッセージのチェック
+          expect { subject }.not_to change(User, :count)
+          expect(page).to have_content('ニックネーム が入力されていません。')
         end
       end
 
