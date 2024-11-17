@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  # get "posts/new"
   devise_for :users
   root 'home#top'
 
-  get "home/top"
+  resources :posts, only: [:new, :create]
 end
